@@ -28,70 +28,86 @@ class IntroductionPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Center(
-        child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: responsiveSpacing(context, 28)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(30),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: primaryColor.withOpacity(0.1),
-                ),
-                child: Icon(
-                  Icons.person_outline_rounded,
-                  color: primaryColor,
-                  size: 70,
-                ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
               ),
-              SizedBox(height: responsiveSpacing(context, 30)),
-              Text(
-                "What is your name?",
-                style: TextStyle(
-                  fontSize: responsiveFontSize(context, 30),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: responsiveSpacing(context, 5)),
-              Text(
-                "This is the name you will use for your main expense file.",
-                style: TextStyle(
-                  fontSize: responsiveFontSize(context, 16),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: responsiveSpacing(context, 20)),
-              CustomTextField(
-                controller: controller,
-                hint: "Type your name here..",
-                textAlign: TextAlign.center,
-                textColor: primaryColor,
-              ),
-              SizedBox(height: responsiveSpacing(context, 15)),
-              CustomButton(
-                text: "Confirm",
-                onTap: () {
-                  FocusScope.of(context).unfocus();
-                  Database database = Database();
-                  database.saveName(controller.text);
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (c, a1, a2) => HomePage(),
-                      transitionsBuilder: (c, anim, a2, child) =>
-                          FadeTransition(opacity: anim, child: child),
-                      transitionDuration: const Duration(milliseconds: 150),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: responsiveSpacing(context, 28)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(30),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: primaryColor.withOpacity(0.1),
+                          ),
+                          child: Icon(
+                            Icons.person_outline_rounded,
+                            color: primaryColor,
+                            size: 70,
+                          ),
+                        ),
+                        SizedBox(height: responsiveSpacing(context, 30)),
+                        Text(
+                          "What is your name?",
+                          style: TextStyle(
+                            fontSize: responsiveFontSize(context, 30),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: responsiveSpacing(context, 5)),
+                        Text(
+                          "This is the name you will use for your main expense file.",
+                          style: TextStyle(
+                            fontSize: responsiveFontSize(context, 16),
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: responsiveSpacing(context, 20)),
+                        CustomTextField(
+                          controller: controller,
+                          hint: "Type your name here..",
+                          textAlign: TextAlign.center,
+                          textColor: primaryColor,
+                        ),
+                        SizedBox(height: responsiveSpacing(context, 15)),
+                        CustomButton(
+                          text: "Confirm",
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            Database database = Database();
+                            database.saveName(controller.text);
+                            Navigator.pushReplacement(
+                              context,
+                              PageRouteBuilder(
+                                pageBuilder: (c, a1, a2) => HomePage(),
+                                transitionsBuilder: (c, anim, a2, child) =>
+                                    FadeTransition(opacity: anim, child: child),
+                                transitionDuration:
+                                    const Duration(milliseconds: 150),
+                              ),
+                            );
+                          },
+                        ),
+                        SizedBox(height: responsiveSpacing(context, 40)),
+                      ],
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
-              SizedBox(height: responsiveSpacing(context, 40)),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

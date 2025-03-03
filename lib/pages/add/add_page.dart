@@ -24,7 +24,10 @@ class AddPage extends StatelessWidget {
         leading: Padding(
           padding: EdgeInsets.only(left: responsiveSpacing(context, 16)),
           child: IconButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () {
+              FocusScope.of(context).unfocus();
+              Navigator.of(context).pop();
+            },
             icon: Icon(
               Icons.arrow_back_ios,
               color: primaryColor,
