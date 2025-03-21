@@ -80,6 +80,7 @@ class IntroductionPage extends StatelessWidget {
                           hint: "Type your name here..",
                           textAlign: TextAlign.center,
                           textColor: primaryColor,
+                          maxLength: 10,
                         ),
                         SizedBox(height: responsiveSpacing(context, 15)),
                         CustomButton(

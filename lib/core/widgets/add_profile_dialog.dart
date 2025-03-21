@@ -32,7 +32,8 @@ class AddProfileDialog extends StatelessWidget {
             ),
           ),
           SizedBox(height: responsiveSpacing(context, 10)),
-          CustomTextField(controller: controller, hint: "Profile name.."),
+          CustomTextField(
+              controller: controller, hint: "Profile name..", maxLength: 10),
           SizedBox(height: responsiveSpacing(context, 20)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

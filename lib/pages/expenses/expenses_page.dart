@@ -42,8 +42,11 @@ class ExpensesPage extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (context) => ConfirmDialog(
-                    onTap: () => BlocProvider.of<ExpensesCubit>(context)
-                        .clearExpenses()),
+                  message:
+                      "Are you sure you want to clear the history of expenses?",
+                  onTap: () =>
+                      BlocProvider.of<ExpensesCubit>(context).clearExpenses(),
+                ),
               );
             },
           ),

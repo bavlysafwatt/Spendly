@@ -5,12 +5,18 @@ import 'package:spendly/constants/constants.dart';
 import 'package:spendly/core/util/database.dart';
 import 'package:spendly/core/util/service_locator.dart';
 import 'package:spendly/core/widgets/add_profile_dialog.dart';
+import 'package:spendly/core/widgets/confirm_dialog.dart';
 import 'package:spendly/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:spendly/cubits/home_cubit/home_cubit.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
 
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
   @override
   Widget build(BuildContext context) {
     List<String> names = getIt.get<Database>().getProfiles();
@@ -62,10 +68,17 @@ class CustomDrawer extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Icon(
-                                FontAwesomeIcons.user,
-                                size: 20,
-                                color: Colors.black,
+                              Container(
+                                padding: EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: primaryColor),
+                                ),
+                                child: Icon(
+                                  FontAwesomeIcons.user,
+                                  size: 16,
+                                  color: primaryColor,
+                                ),
                               ),
                               SizedBox(width: 10),
                               Text(
@@ -78,12 +91,43 @@ class CustomDrawer extends StatelessWidget {
                             ],
                           ),
                           getIt.get<Database>().selectedName == names[index]
-                              ? Icon(
-                                  FontAwesomeIcons.check,
-                                  color: Colors.green,
-                                  size: 20,
+                              ? IconButton(
+                                  onPressed: () {},
+                                  icon: Icon(
+                                    FontAwesomeIcons.check,
+                                    color: Colors.green,
+                                    size: 16,
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  constraints: BoxConstraints(),
                                 )
-                              : SizedBox(),
+                              : IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => ConfirmDialog(
+                                        message:
+                                            "Are you sure you want to delete this profile?",
+                                        onTap: () {
+                                          setState(
+                                            () {
+                                              getIt
+                                                  .get<Database>()
+                                                  .deleteName(names[index]);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  icon: Icon(
+                                    FontAwesomeIcons.trash,
+                                    color: Colors.red,
+                                    size: 16,
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  constraints: BoxConstraints(),
+                                ),
                         ],
                       ),
                     ),

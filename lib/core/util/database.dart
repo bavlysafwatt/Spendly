@@ -15,6 +15,24 @@ class Database {
     namesBox.put("selectedName", selectedName);
   }
 
+  void deleteName(String name) {
+    List<String> names = namesBox.get("names") ?? [];
+    names.remove(name);
+    namesBox.put("names", names);
+    if (expensesBox.containsKey(name)) {
+      expensesBox.delete(name);
+    }
+    if (goalsBox.containsKey(name)) {
+      goalsBox.delete(name);
+    }
+    if (walletBox.containsKey(name)) {
+      walletBox.delete(name);
+    }
+    if (spentBox.containsKey(name)) {
+      spentBox.delete(name);
+    }
+  }
+
   String? getName() {
     if (namesBox.get("selectedName") == null) {
       selectedName = null;

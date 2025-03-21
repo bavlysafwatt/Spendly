@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField(
-      {super.key,
-      required this.controller,
-      required this.hint,
-      this.keyboardType,
-      this.textAlign,
-      this.textColor = Colors.black});
+  const CustomTextField({
+    super.key,
+    required this.controller,
+    required this.hint,
+    this.keyboardType,
+    this.textAlign,
+    this.textColor = Colors.black,
+    this.maxLength,
+  });
 
   final TextEditingController controller;
   final String hint;
   final TextInputType? keyboardType;
   final TextAlign? textAlign;
   final Color? textColor;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLength: maxLength,
       textAlign: textAlign ?? TextAlign.start,
       keyboardType: keyboardType,
       controller: controller,

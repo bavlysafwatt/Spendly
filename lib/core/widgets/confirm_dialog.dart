@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:spendly/constants/constants.dart';
 
 class ConfirmDialog extends StatelessWidget {
-  const ConfirmDialog({super.key, required this.onTap});
+  const ConfirmDialog({super.key, required this.onTap, required this.message});
 
   final void Function() onTap;
+  final String message;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class ConfirmDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            "Are you sure you want to clear the history of expenses?",
+            message,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
