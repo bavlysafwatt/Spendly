@@ -3,6 +3,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:spendly/core/util/database.dart';
+import 'package:spendly/core/util/service_locator.dart';
 import 'package:spendly/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:spendly/cubits/home_cubit/home_cubit.dart';
 import 'package:spendly/models/goal.dart';
@@ -13,13 +14,12 @@ class GoalCubit extends Cubit<GoalState> {
   GoalCubit(this.expensesCubit, this.homeCubit) : super(GoalInitial());
 
   List goals = [];
-  Database database = Database();
   final HomeCubit homeCubit;
   final ExpensesCubit expensesCubit;
   int goalColor = 0xff2196f3;
 
   void loadGoals() {
-    goals = database.loadGoals();
+    goals = getIt.get<Database>().loadGoals();
     emit(GoalSuccess());
   }
 
@@ -29,7 +29,7 @@ class GoalCubit extends Cubit<GoalState> {
         Goal(goalColor, title: title, amount: amount, completed: completed);
     goals.add(goal);
     emit(GoalSuccess());
-    database.saveGoals(goals);
+    getIt.get<Database>().saveGoals(goals);
   }
 
   void editGoal(
@@ -60,12 +60,12 @@ class GoalCubit extends Cubit<GoalState> {
             title: goals[index].title, amount: amount, isGoal: true);
       }
     }
-    database.saveGoals(goals);
+    getIt.get<Database>().saveGoals(goals);
   }
 
   void deleteGoal(int index) {
     goals.removeAt(index);
     emit(GoalSuccess());
-    database.saveGoals(goals);
+    getIt.get<Database>().saveGoals(goals);
   }
 }

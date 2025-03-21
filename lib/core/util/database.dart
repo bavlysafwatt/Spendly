@@ -2,75 +2,94 @@ import 'package:hive/hive.dart';
 import 'package:spendly/constants/constants.dart';
 
 class Database {
-  final appBox = Hive.box(kBox);
+  final namesBox = Hive.box(names);
+  final expensesBox = Hive.box(expenses);
+  final goalsBox = Hive.box(goals);
+  final walletBox = Hive.box(wallet);
+  final spentBox = Hive.box(spent);
 
-  static String? getName() {
-    final appBox = Hive.box(kBox);
-    String? name;
-    if (appBox.get("name") == null) {
-      name = null;
+  String? selectedName = "";
+
+  void setSelectedName(String name) {
+    selectedName = name;
+    namesBox.put("selectedName", selectedName);
+  }
+
+  String? getName() {
+    if (namesBox.get("selectedName") == null) {
+      selectedName = null;
     } else {
-      name = appBox.get("name");
+      selectedName = namesBox.get("selectedName");
     }
-    return name;
+    return selectedName;
   }
 
   void saveName(String name) {
-    appBox.put("name", name);
+    List<String> names = namesBox.get("names") ?? [];
+    names.add(name);
+    namesBox.put("names", names);
+
+    selectedName = name;
+    namesBox.put("selectedName", selectedName);
+  }
+
+  List<String> getProfiles() {
+    List<String> profiles = namesBox.get("names");
+    return profiles;
   }
 
   void saveWallet(double wallet) {
-    appBox.put("wallet", wallet);
+    walletBox.put(selectedName, wallet);
   }
 
   void saveSpent(double spent) {
-    appBox.put("spent", spent);
+    spentBox.put(selectedName, spent);
   }
 
   void saveExpenses(List expenses) {
-    appBox.put("expensesList", expenses);
+    expensesBox.put(selectedName, expenses);
   }
 
   void saveGoals(List goals) {
-    appBox.put("goals", goals);
+    goalsBox.put(selectedName, goals);
   }
 
   double loadWallet() {
     double wallet;
-    if (appBox.get("wallet") == null) {
+    if (walletBox.get(selectedName) == null) {
       wallet = 0;
     } else {
-      wallet = appBox.get("wallet");
+      wallet = walletBox.get(selectedName);
     }
     return wallet;
   }
 
   double loadSpent() {
     double spent;
-    if (appBox.get("spent") == null) {
+    if (spentBox.get(selectedName) == null) {
       spent = 0;
     } else {
-      spent = appBox.get("spent");
+      spent = spentBox.get(selectedName);
     }
     return spent;
   }
 
   List loadExpenses() {
     List expenses;
-    if (appBox.get("expensesList") == null) {
+    if (expensesBox.get(selectedName) == null) {
       expenses = [];
     } else {
-      expenses = appBox.get("expensesList");
+      expenses = expensesBox.get(selectedName);
     }
     return expenses;
   }
 
   List loadGoals() {
     List goals;
-    if (appBox.get("goals") == null) {
+    if (goalsBox.get(selectedName) == null) {
       goals = [];
     } else {
-      goals = appBox.get("goals");
+      goals = goalsBox.get(selectedName);
     }
     return goals;
   }

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:spendly/constants/constants.dart';
 import 'package:spendly/core/util/database.dart';
+import 'package:spendly/core/util/service_locator.dart';
 import 'package:spendly/core/widgets/custom_button.dart';
 import 'package:spendly/core/widgets/custom_text_field.dart';
 import 'package:spendly/pages/home/home_page.dart';
@@ -85,8 +86,7 @@ class IntroductionPage extends StatelessWidget {
                           text: "Confirm",
                           onTap: () {
                             FocusScope.of(context).unfocus();
-                            Database database = Database();
-                            database.saveName(controller.text);
+                            getIt.get<Database>().saveName(controller.text);
                             Navigator.pushReplacement(
                               context,
                               PageRouteBuilder(

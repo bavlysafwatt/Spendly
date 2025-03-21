@@ -45,6 +45,7 @@ dependencies:
   get: ^4.6.6
   overlay_support: ^2.1.0
   intl: ^0.20.2
+  get_it: ^8.0.3
 
 dev_dependencies:
   flutter_test:

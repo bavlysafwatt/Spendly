@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:spendly/constants/constants.dart';
 import 'package:spendly/core/util/database.dart';
+import 'package:spendly/core/util/service_locator.dart';
 import 'package:spendly/cubits/home_cubit/home_cubit.dart';
 import 'package:spendly/models/expense.dart';
 
@@ -15,10 +16,9 @@ class ExpensesCubit extends Cubit<ExpensesState> {
 
   final HomeCubit homeCubit;
   List expenses = [];
-  Database database = Database();
 
   void loadExpenses() {
-    expenses = database.loadExpenses();
+    expenses = getIt.get<Database>().loadExpenses();
     emit(ExpensesSuccess());
   }
 
@@ -38,7 +38,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
       emit(ExpensesSuccess());
       homeCubit.editWallet(-1 * amount);
       homeCubit.editSpent(amount);
-      database.saveExpenses(expenses);
+      getIt.get<Database>().saveExpenses(expenses);
     }
   }
 
@@ -54,7 +54,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
     expenses.add(expense);
     emit(ExpensesSuccess());
     homeCubit.editWallet(amount);
-    database.saveExpenses(expenses);
+    getIt.get<Database>().saveExpenses(expenses);
   }
 
   void deleteExpense(int index) {
@@ -66,14 +66,14 @@ class ExpensesCubit extends Cubit<ExpensesState> {
         double amount = expenses[index].amount;
         expenses.removeAt(index);
         emit(ExpensesSuccess());
-        database.saveExpenses(expenses);
+        getIt.get<Database>().saveExpenses(expenses);
         homeCubit.editWallet(-1 * amount);
       }
     } else {
       double amount = expenses[index].amount;
       expenses.removeAt(index);
       emit(ExpensesSuccess());
-      database.saveExpenses(expenses);
+      getIt.get<Database>().saveExpenses(expenses);
       homeCubit.editWallet(amount);
       homeCubit.editSpent(-1 * amount);
     }
@@ -82,7 +82,7 @@ class ExpensesCubit extends Cubit<ExpensesState> {
   void clearExpenses() {
     expenses.clear();
     emit(ExpensesSuccess());
-    database.saveExpenses(expenses);
+    getIt.get<Database>().saveExpenses(expenses);
     homeCubit.editSpent(-1 * homeCubit.spent);
   }
 }

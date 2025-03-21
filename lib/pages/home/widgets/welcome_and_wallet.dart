@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spendly/constants/constants.dart';
 import 'package:spendly/core/util/assets.dart';
 import 'package:spendly/core/util/database.dart';
+import 'package:spendly/core/util/service_locator.dart';
 import 'package:spendly/cubits/home_cubit/home_cubit.dart';
 import 'package:spendly/pages/home/widgets/fitted_text.dart';
 
@@ -13,7 +14,6 @@ class WelcomeAndWallet extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-    String name = Database.getName()!;
 
     return SafeArea(
       child: Stack(
@@ -45,9 +45,8 @@ class WelcomeAndWallet extends StatelessWidget {
           Center(
             child: Column(
               children: [
-                Spacer(flex: 2),
                 FittedText(
-                  title: "Welcome back, $name!",
+                  title: "Welcome back, ${getIt.get<Database>().selectedName}!",
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
                 ),

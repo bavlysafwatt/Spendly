@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 final Color scaffoldBackgroundColor = Color(0xffEFEFEF);
 final Color primaryColor = Color(0xFF4558C8);
-final String kBox = "expenses";
+final String names = "names";
+final String expenses = "expenses";
+final String goals = "goals";
+final String wallet = "wallet";
+final String spent = "spent";
 final String exchange = "Exchange";
 final String deposit = "Deposit";
 

@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:spendly/constants/constants.dart';
 import 'package:spendly/core/util/database.dart';
+import 'package:spendly/core/util/service_locator.dart';
 import 'package:spendly/core/widgets/introduction_page.dart';
 import 'package:spendly/cubits/expenses_cubit/expenses_cubit.dart';
 import 'package:spendly/cubits/goal_cubit/goal_cubit.dart';
@@ -14,10 +15,15 @@ import 'package:spendly/models/goal.dart';
 import 'package:spendly/pages/home/home_page.dart';
 
 void main() async {
+  setupLocator();
   await Hive.initFlutter();
   Hive.registerAdapter(ExpenseAdapter());
   Hive.registerAdapter(GoalAdapter());
-  await Hive.openBox(kBox);
+  await Hive.openBox(names);
+  await Hive.openBox(expenses);
+  await Hive.openBox(spent);
+  await Hive.openBox(goals);
+  await Hive.openBox(wallet);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     systemNavigationBarColor: Colors.black,
     statusBarColor: scaffoldBackgroundColor,
@@ -35,7 +41,7 @@ class Spendly extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? name = Database.getName();
+    String? name = getIt.get<Database>().getName();
 
     return MultiBlocProvider(
       providers: [
