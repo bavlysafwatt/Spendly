@@ -101,12 +101,12 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: SpaceGrotesk
-      fonts:
-        - asset: assets/fonts/SpaceGrotesk.ttf
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo.ttf
+    - family: Exo
+      fonts:
+        - asset: assets/fonts/Exo.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

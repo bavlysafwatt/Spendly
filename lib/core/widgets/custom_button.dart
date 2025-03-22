@@ -22,12 +22,12 @@ class CustomButton extends StatelessWidget {
           color: primaryColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(10),
         ),
-        width: 100,
+        width: MediaQuery.of(context).size.width * 0.3,
         child: Center(
           child: Text(
             text,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: responsiveFontSize(context, 14),
               fontWeight: FontWeight.bold,
               color: primaryColor,
             ),

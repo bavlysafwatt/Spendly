@@ -24,7 +24,7 @@ class IntroductionPage extends StatelessWidget {
           "Welcome to Spendly App!",
           style: TextStyle(
             fontSize: responsiveFontSize(context, 20),
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
           ),
         ),
         centerTitle: true,
@@ -86,18 +86,21 @@ class IntroductionPage extends StatelessWidget {
                         CustomButton(
                           text: "Confirm",
                           onTap: () {
-                            FocusScope.of(context).unfocus();
-                            getIt.get<Database>().saveName(controller.text);
-                            Navigator.pushReplacement(
-                              context,
-                              PageRouteBuilder(
-                                pageBuilder: (c, a1, a2) => HomePage(),
-                                transitionsBuilder: (c, anim, a2, child) =>
-                                    FadeTransition(opacity: anim, child: child),
-                                transitionDuration:
-                                    const Duration(milliseconds: 150),
-                              ),
-                            );
+                            if (controller.text.isNotEmpty) {
+                              FocusScope.of(context).unfocus();
+                              getIt.get<Database>().saveName(controller.text);
+                              Navigator.pushReplacement(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder: (c, a1, a2) => HomePage(),
+                                  transitionsBuilder: (c, anim, a2, child) =>
+                                      FadeTransition(
+                                          opacity: anim, child: child),
+                                  transitionDuration:
+                                      const Duration(milliseconds: 150),
+                                ),
+                              );
+                            }
                           },
                         ),
                         SizedBox(height: responsiveSpacing(context, 40)),

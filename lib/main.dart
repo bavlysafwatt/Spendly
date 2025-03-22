@@ -61,7 +61,7 @@ class Spendly extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            fontFamily: "Cairo",
+            fontFamily: "Exo",
             scaffoldBackgroundColor: scaffoldBackgroundColor,
             primarySwatch: Colors.lightBlue,
             useMaterial3: false,
