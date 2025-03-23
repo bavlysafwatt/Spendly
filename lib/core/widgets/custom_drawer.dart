@@ -42,8 +42,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
+                    Navigator.of(context).pop();
                     if (getIt.get<Database>().selectedName != names[index]) {
-                      Navigator.of(context).pop();
                       getIt.get<Database>().setSelectedName(names[index]);
                       BlocProvider.of<HomeCubit>(context).loadProfile();
                       BlocProvider.of<ExpensesCubit>(context).loadExpenses();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:spendly/constants/constants.dart';
 import 'package:spendly/core/util/database.dart';
+import 'package:spendly/core/util/functions/show_snack_bar.dart';
 import 'package:spendly/core/util/service_locator.dart';
 import 'package:spendly/core/widgets/custom_text_field.dart';
 import 'package:spendly/cubits/expenses_cubit/expenses_cubit.dart';
@@ -50,10 +51,26 @@ class AddProfileDialog extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pop();
-                  getIt.get<Database>().saveName(controller.text);
-                  BlocProvider.of<HomeCubit>(context).loadProfile();
-                  BlocProvider.of<ExpensesCubit>(context).loadExpenses();
+                  final database = getIt.get<Database>();
+                  List<String> existingProfiles = database.getProfiles();
+                  if (controller.text.isEmpty) {
+                    showSnackBar(
+                      context,
+                      "Profile name cannot be empty!",
+                      Colors.red,
+                    );
+                  } else if (existingProfiles.contains(controller.text)) {
+                    showSnackBar(
+                      context,
+                      "Profile name already exists!",
+                      Colors.red,
+                    );
+                  } else {
+                    Navigator.of(context).pop();
+                    database.saveName(controller.text);
+                    BlocProvider.of<HomeCubit>(context).loadProfile();
+                    BlocProvider.of<ExpensesCubit>(context).loadExpenses();
+                  }
                 },
                 child: Text(
                   "Add",
